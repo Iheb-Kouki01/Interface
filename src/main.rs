@@ -40,7 +40,9 @@ impl eframe::App for MyApp {
                 // Menu->File
                 ui.menu_button("File", |ui| {
                     let _ = ui.button("Open"); //Placeholer for the moment
-                    let _ = ui.button("Save"); //Placeholer for the moment
+                    if ui.button("Save").clicked(){
+                        ui.ctx().send_viewport_cmd(egui::ViewportCommand::Screenshot );
+                    }; //Placeholer for the moment
                     ui.separator();
                     if ui.button("Close").clicked(){
                         ui.ctx().send_viewport_cmd(egui::ViewportCommand::Close);
@@ -64,6 +66,18 @@ impl eframe::App for MyApp {
                     ui.separator();
                     if ui.button("Config..").clicked() {
                         self.cnfg = true;
+                    };
+                });
+                //Menu->Edit
+                ui.menu_button("Edit", |ui| {
+                    if ui.button("Copy").clicked(){
+                        ui.ctx().send_viewport_cmd(egui::ViewportCommand::RequestCopy);
+                    }; 
+                    if ui.button("Cut").clicked(){
+                        ui.ctx().send_viewport_cmd(egui::ViewportCommand::RequestCut );
+                    };
+                    if ui.button("Paste").clicked(){
+                        ui.ctx().send_viewport_cmd(egui::ViewportCommand::RequestPaste);
                     };
                 });
             });
